@@ -89,3 +89,32 @@ ggplot() +
   scale_color_viridis(trans = "log") +
   theme_void() + ylim(50,59) + coord_map()
 
+### Center: reorder your dataset first! Big cities appear later = on top
+
+data %>%
+ arrange(pop) %>% 
+ mutate(name = factor(name, unique(name))) %>% 
+ ggplot() +
+    geom_polygon(data = UK, aes(x = long, y = lat, group = group), 
+                 fill = "grey", alpha = 0.3) +
+    geom_point(aes(x = long, y = lat, size = pop, color = pop), 
+               alpha = 0.9) +
+    scale_size_continuous(range = c(1,12)) +
+    scale_color_viridis(trans = "log") +
+    theme_void() + ylim(50,59) + coord_map() + 
+    theme(legend.position = "none")
+
+### Se quiser inverter a posição, use apenas arrange(desc(pop))
+
+data %>%
+ arrange(desc(pop)) %>% 
+ mutate( name = factor(name, unique(name))) %>% 
+ ggplot() +
+    geom_polygon(data = UK, aes(x = long, y = lat, group = group), 
+                 fill = "grey", alpha = 0.3) +
+    geom_point( aes(x = long, y = lat, size = pop, color = pop), 
+                alpha = 0.9) +
+    scale_size_continuous(range = c(1,12)) +
+    scale_color_viridis(trans = "log") +
+    theme_void() + ylim(50,59) + coord_map() + 
+    theme(legend.position = "none")
