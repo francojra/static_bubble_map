@@ -31,6 +31,7 @@
 library(ggplot2)
 library(dplyr)
 library(maps)
+library(ggrepel)
 
 # Extraindo o polígono do país -------------------------------------------------------------------------------------------------------------
 
@@ -38,9 +39,35 @@ UK <- map_data("world") %>%
   filter(region == "UK") 
 UK
 
-# O segundo passo é carregar o data frame com as informações do bubble map que você
-# quer desenhar. O pacote maps promove a lista das maiores cidades do mundo. Vamos
-# usar as informações do UK.
+### O segundo passo é carregar o data frame com as informações do bubble map que você
+### quer desenhar. O pacote maps promove a lista das maiores cidades do mundo. Vamos
+### usar as informações do UK.
 
 data <- world.cities %>% filter(country.etc == "UK")
 data # Informa o tamanho da população de cada local
+
+# Basic scatterplot map --------------------------------------------------------------------------------------------------------------------
+
+### O pacote ggplot2 torna fácil a construção do mapa básico. Use geom_polygon() para
+### o formato do mapa do UK, depois adicione o scatterplot sobre ele com o geom_point().
+
+### O pacote ggrepel evita a sobreposição entre os nomes das cidades.
+
+ggplot() +
+  geom_polygon(data = UK, aes(x = long, y = lat, group = group), 
+               fill = "grey", alpha = 0.3) +
+  geom_point(data = data, aes(x = long, y = lat)) +
+  theme_void() + ylim(50,59) + coord_map() 
+
+# Gráfico com os nomes das 10 maiores cidades:
+
+ggplot() +
+  geom_polygon(data = UK, aes(x = long, y = lat, group = group), 
+               fill = "grey", alpha = 0.3) +
+  geom_point(data = data, aes(x = long, y = lat, alpha = pop)) +
+  geom_text_repel( data = data %>% arrange(pop) %>% tail(10), 
+                   aes(x = long, y = lat,label = name), size = 5) +
+  geom_point(data = data %>% arrange(pop) %>% tail(10), aes(x = long, y = lat), 
+              color = "red", size = 3) +
+  theme_void() + ylim(50,59) + coord_map() +
+  theme(legend.position = "none")
