@@ -84,7 +84,7 @@ ggplot() +
 ggplot() +
   geom_polygon(data = UK, aes(x = long, y = lat, group = group), fill = "grey",
                alpha = 0.3) +
-  geom_point( data = data, aes(x = long, y = lat, size = pop, color = pop)) +
+  geom_point(data = data, aes(x = long, y = lat, size = pop, color = pop)) +
   scale_size_continuous(range = c(1,12)) +
   scale_color_viridis(trans = "log") +
   theme_void() + ylim(50,59) + coord_map()
@@ -108,11 +108,11 @@ data %>%
 
 data %>%
  arrange(desc(pop)) %>% 
- mutate( name = factor(name, unique(name))) %>% 
+ mutate(name = factor(name, unique(name))) %>% 
  ggplot() +
     geom_polygon(data = UK, aes(x = long, y = lat, group = group), 
                  fill = "grey", alpha = 0.3) +
-    geom_point( aes(x = long, y = lat, size = pop, color = pop), 
+    geom_point(aes(x = long, y = lat, size = pop, color = pop), 
                 alpha = 0.9) +
     scale_size_continuous(range = c(1,12)) +
     scale_color_viridis(trans = "log") +
