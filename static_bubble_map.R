@@ -28,10 +28,11 @@
 
 # Carregar pacotes -------------------------------------------------------------------------------------------------------------------------
 
-library(ggplot2)
-library(dplyr)
-library(maps)
-library(ggrepel)
+library(ggplot2) # Produzir mapas baseado na gramática de gráficos
+library(dplyr) # Usar código pipe para selecionar dados e fazer cálculos 
+library(maps) # Criar o mapa
+library(ggrepel) # Adicionar texto ao mapa
+library(viridis) # Adicionar paleta de cores ao mapa
 
 # Extraindo o polígono do país -------------------------------------------------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ ggplot() +
   geom_point(data = data, aes(x = long, y = lat)) +
   theme_void() + ylim(50,59) + coord_map() 
 
-# Gráfico com os nomes das 10 maiores cidades:
+### Gráfico com os nomes das 10 maiores cidades:
 
 ggplot() +
   geom_polygon(data = UK, aes(x = long, y = lat, group = group), 
@@ -71,3 +72,20 @@ ggplot() +
               color = "red", size = 3) +
   theme_void() + ylim(50,59) + coord_map() +
   theme(legend.position = "none")
+
+# Basic bubble map -------------------------------------------------------------------------------------------------------------------------
+
+### Agora nós queremos adicionar uma outra informação. O número de habitantes por 
+### cidade irá ser mapeado para cor e tamanho das bolhas. Note que a ordem da cidade
+### importa! Aconselha-se mostrar a informação mais importante no topo. 
+ 
+### Adicionar cor e tamanho
+
+ggplot() +
+  geom_polygon(data = UK, aes(x = long, y = lat, group = group), fill = "grey",
+               alpha = 0.3) +
+  geom_point( data = data, aes(x = long, y = lat, size = pop, color = pop)) +
+  scale_size_continuous(range = c(1,12)) +
+  scale_color_viridis(trans = "log") +
+  theme_void() + ylim(50,59) + coord_map()
+
