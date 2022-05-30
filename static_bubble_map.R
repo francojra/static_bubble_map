@@ -31,5 +31,16 @@
 library(ggplot2)
 library(dplyr)
 library(maps)
- 
 
+# Extraindo o polígono do país -------------------------------------------------------------------------------------------------------------
+
+UK <- map_data("world") %>% 
+  filter(region == "UK") 
+UK
+
+# O segundo passo é carregar o data frame com as informações do bubble map que você
+# quer desenhar. O pacote maps promove a lista das maiores cidades do mundo. Vamos
+# usar as informações do UK.
+
+data <- world.cities %>% filter(country.etc == "UK")
+data # Informa o tamanho da população de cada local
