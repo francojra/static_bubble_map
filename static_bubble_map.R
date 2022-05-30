@@ -89,7 +89,7 @@ ggplot() +
   scale_color_viridis(trans = "log") +
   theme_void() + ylim(50,59) + coord_map()
 
-### Center: reorder your dataset first! Big cities appear later = on top
+### Reordenar o conjunto de dados primeiro! Grandes cidades aparecem no topo
 
 data %>%
  arrange(pop) %>% 
