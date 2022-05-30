@@ -15,5 +15,5 @@
 - Gráfico com os nomes das 10 maiores cidades.
 6. Basic bubble map:
 - Adicionar cor e tamanho;
-- Center: reorder your dataset first! Big cities appear later = on top;
+- Reordenar o conjunto de dados primeiro! Grandes cidades aparecem no topo;
 - Se quiser inverter a posição, use apenas arrange(desc(pop)).
